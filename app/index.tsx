@@ -24,7 +24,7 @@ export default function Index() {
       <Link href="/register" style={styles.link}>
         <ThemedText>Go to register</ThemedText>
       </Link>
-      <Link href="/(dashboard)/create" style={styles.link}>
+      <Link href="/(dashboard)/books" style={styles.link}>
         <ThemedText>Go to dashboard</ThemedText>
       </Link>
     </ThemedView>

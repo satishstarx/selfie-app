@@ -13,7 +13,7 @@ export default function ThemedButton({ style, ...props }: any) {
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: Colors.primary,
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 5,
     marginVertical: 10,
