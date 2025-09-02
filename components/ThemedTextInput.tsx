@@ -7,7 +7,7 @@ export default function ThemedTextInput({ style, ...props }: any) {
 
   return (
     <TextInput
-      placeholderTextColor={theme.text}
+      placeholderTextColor={theme.iconColor}
       style={[
         {
           backgroundColor: theme.uiBackground,

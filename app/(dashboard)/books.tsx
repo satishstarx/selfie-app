@@ -1,16 +1,36 @@
-import { StyleSheet } from "react-native";
+import { FlatList, Pressable, StyleSheet } from "react-native";
 
-import ThemedView from "@/components/ThemedView";
-import ThemedText from "@/components/ThemedText";
 import Spacer from "@/components/Spacer";
+import ThemedCard from "@/components/ThemedCard";
+import ThemedText from "@/components/ThemedText";
+import ThemedView from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
+import { useBooks } from "@/hooks/useBooks";
 
 export default function Books() {
+  const { books } = useBooks();
+
   return (
     <ThemedView style={styles.container} safe={true}>
-      {/* <Spacer /> */}
+      <Spacer height={20} />
       <ThemedText style={styles.heading} title={true}>
         Your Reading List
       </ThemedText>
+
+      <Spacer height={20} />
+      <FlatList
+        data={books}
+        keyExtractor={(item) => item.$id}
+        contentContainerStyle={styles.list}
+        renderItem={({ item }) => (
+          <Pressable>
+            <ThemedCard style={styles.card}>
+              <ThemedText style={styles.title}>{item.title}</ThemedText>
+              <ThemedText>by {item.author}</ThemedText>
+            </ThemedCard>
+          </Pressable>
+        )}
+      />
     </ThemedView>
   );
 }
@@ -18,12 +38,26 @@ export default function Books() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    alignItems: "center",
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  card: {
+    marginHorizontal: 20,
+    marginVertical: 10,
+    padding: 10,
+    paddingLeft: 15,
+    borderLeftWidth: 5,
+    borderLeftColor: Colors.primary,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  list: {
+    marginVertical: 10,
   },
 });

@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5c1c8",
     borderRadius: 5,
     borderWidth: 1,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
     textAlign: "center",
-    fontWeight: "medium"
+    fontWeight: "bold"
   },
 });
