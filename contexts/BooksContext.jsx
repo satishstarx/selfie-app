@@ -15,7 +15,7 @@ export function BooksProvider({ children }) {
         databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
         tableId: "books",
         queries: [Query.equal("userId", [user.$id])],
-      })
+      });
       setBooks(response.rows);
     } catch (error) {
       console.error(error.message);
@@ -24,6 +24,13 @@ export function BooksProvider({ children }) {
 
   async function fetchBooksById(id) {
     try {
+      const response = await tablesDB.getRow({
+        databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: "books",
+        rowId: id,
+      });
+
+      return response;
     } catch (error) {
       console.error(error.message);
     }
@@ -49,6 +56,11 @@ export function BooksProvider({ children }) {
 
   async function deleteBook(id) {
     try {
+      await tablesDB.deleteRow({
+        databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID,
+        tableId: "books",
+        rowId: id,
+      });
     } catch (error) {
       console.error(error.message);
     }
@@ -68,7 +80,13 @@ export function BooksProvider({ children }) {
         if (events.includes("databases.*.tables.*.rows.create")) {
           setBooks((prevBooks) => [...prevBooks, payload]);
         }
-      })
+
+        if (events.includes("databases.*.tables.*.rows.delete")) {
+          setBooks((prevBooks) =>
+            prevBooks.filter((b) => b.$id !== payload.$id)
+          );
+        }
+      });
     } else {
       setBooks([]);
     }
@@ -77,8 +95,8 @@ export function BooksProvider({ children }) {
       if (unsubscribe) {
         unsubscribe();
       }
-    }
-  }, [user])
+    };
+  }, [user]);
 
   return (
     <BooksContext.Provider
